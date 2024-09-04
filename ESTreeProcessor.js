@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ESTreeProcessor
 // @namespace    https://github.com/mapomatic
-// @version      2.0.0
+// @version      2.0.1
 // @description  Compiles a string containing Javascript to an ESTree object and/or executes an ESTree object in Javascript
 // @author       MapOMatic
 // @license      GNU GPLv3
@@ -5618,7 +5618,7 @@ const ESTreeProcessor = (function() {
         }
 
         static processReturnStatement(node, scope) {
-            const returnValue = this.processNode(node.argument, scope);
+            const returnValue = node.argument && this.processNode(node.argument, scope);
             return new Return(returnValue);
         }
 
