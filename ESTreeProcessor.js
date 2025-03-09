@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         ESTreeProcessor
 // @namespace    https://github.com/mapomatic
-// @version      2.1.0
+// @version      2.1.1
 // @description  Compiles a string containing Javascript to an ESTree object and/or executes an ESTree object in Javascript
 // @author       MapOMatic
+// @match        *://*/*
 // @license      GNU GPLv3
 // ==/UserScript==
 
@@ -16,7 +17,7 @@ const ESTreeProcessor = (function() {
     'use strict';
 
     // Update this when you make any changes to ESTreeProcessor.
-    const VERSION = '2.1.0';
+    const VERSION = '2.1.1';
 
     // This is a copy of the esprima-next library. The Node.js build has been modified to work with userscripts.
     // The following copyright notice applies to the espima-next library.
