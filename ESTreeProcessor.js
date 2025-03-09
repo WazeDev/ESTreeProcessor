@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ESTreeProcessor
 // @namespace    https://github.com/mapomatic
-// @version      2.0.1
+// @version      2.1.0
 // @description  Compiles a string containing Javascript to an ESTree object and/or executes an ESTree object in Javascript
 // @author       MapOMatic
 // @license      GNU GPLv3
@@ -14,6 +14,9 @@
 /* eslint-disable */
 const ESTreeProcessor = (function() {
     'use strict';
+
+    // Update this when you make any changes to ESTreeProcessor.
+    const VERSION = '2.1.0';
 
     // This is a copy of the esprima-next library. The Node.js build has been modified to work with userscripts.
     // The following copyright notice applies to the espima-next library.
@@ -5441,7 +5444,8 @@ const ESTreeProcessor = (function() {
             [esprima.Syntax.BreakStatement]: Interpreter.processBreakStatement.bind(Interpreter),
             [esprima.Syntax.ContinueStatement]: Interpreter.processContinueStatement.bind(Interpreter),
             [esprima.Syntax.DebuggerStatement]: Interpreter.processDebuggerStatement.bind(Interpreter),
-            [esprima.Syntax.SwitchStatement]: Interpreter.processSwitchStatement.bind(Interpreter)
+            [esprima.Syntax.SwitchStatement]: Interpreter.processSwitchStatement.bind(Interpreter),
+            [esprima.Syntax.SpreadElement]: Interpreter.processSpreadElement.bind(Interpreter)
         };
 
         static processNode(node, scope) {
@@ -6212,7 +6216,12 @@ const ESTreeProcessor = (function() {
             }
             return returnValue;
         }
+
+        static processSpreadElement(node, scope) {
+            const returnValue = [...this.processNode(node.argument, scope)];
+            return returnValue;
+        }
     }
 
-    return { compile: esprima.parseScript, execute: Interpreter.execute.bind(Interpreter) };
+    return { compile: esprima.parseScript, execute: Interpreter.execute.bind(Interpreter), version: VERSION };
 })();
